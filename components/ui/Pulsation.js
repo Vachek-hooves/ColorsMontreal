@@ -66,7 +66,7 @@ export default Pulsation;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000',
+    backgroundColor: '#180D0C',
     justifyContent: 'center',
     alignItems: 'center',
   },
