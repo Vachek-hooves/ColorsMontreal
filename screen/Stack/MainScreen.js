@@ -143,6 +143,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     position: 'relative',
+    marginTop: 100,
   },
   centerCircle: {
     width: 60,
@@ -181,16 +182,20 @@ const styles = StyleSheet.create({
   buttonContainer: {
     marginBottom: 40,
     gap: 15,
+    // flex: 1,
   },
   button: {
     backgroundColor: '#FFA500',
     paddingVertical: 16,
     borderRadius: 30,
     alignItems: 'center',
+    marginBottom: 10,
+    marginHorizontal: 30,
   },
   buttonText: {
     color: '#000',
     fontSize: 16,
     fontWeight: 'bold',
+    paddingVertical: 15,
   },
 })
