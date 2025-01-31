@@ -6,13 +6,13 @@ const ChooseColor = ({ navigation }) => {
   const [selectedColor, setSelectedColor] = useState(null)
 
   const colorSections = [
-    { id: 1, color: '#4169E1', angle: 60 },    // Blue
+    { id: 1, color: '#4169E1', angle: 0 },     // Blue - starts at 0 degrees
     { id: 2, color: '#FA8072', angle: 60 },    // Salmon
-    { id: 3, color: '#DC143C', angle: 60 },    // Crimson
-    { id: 4, color: '#FFD700', angle: 60 },    // Gold
-    { id: 5, color: '#FFFFFF', angle: 60 },    // White
-    { id: 6, color: '#228B22', angle: 60 },    // Forest Green
-  ]
+    { id: 3, color: '#DC143C', angle: 120 },   // Crimson
+    { id: 4, color: '#FFD700', angle: 180 },   // Gold
+    { id: 5, color: '#FFFFFF', angle: 240 },   // White
+    { id: 6, color: '#228B22', angle: 300 },   // Forest Green
+  ].reverse() // Reverse the array to fix layering
 
   const handleColorSelect = (color) => {
     setSelectedColor(color)
@@ -51,8 +51,9 @@ const ChooseColor = ({ navigation }) => {
                 {
                   backgroundColor: section.color,
                   transform: [
-                    { rotate: `${(section.id - 1) * 60}deg` }
-                  ]
+                    { rotate: `${section.angle}deg` }
+                  ],
+                  zIndex: 7 - section.id, // Higher zIndex for earlier sections
                 }
               ]}
               onPress={() => handleColorSelect(section.color)}
@@ -161,7 +162,7 @@ const styles = StyleSheet.create({
     top: 150,      // Center vertically
     marginLeft: 0, // Negative half of section width
     marginTop: 0,  // Negative half of section height
-    transform: [{ rotate: '0deg' }],  // Will be set dynamically
+    // transform: [{ rotate: '0deg' }],  // Will be set dynamically
     transformOrigin: '0 0',
     borderWidth: 1,
     borderColor: '#333',
