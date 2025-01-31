@@ -6,12 +6,12 @@ const ChooseColor = ({ navigation }) => {
   const [selectedColor, setSelectedColor] = useState(null)
 
   const colorSections = [
-    { id: 6, color: '#228B22', angle: 300, zIndex: 1 },   // Forest Green - lowest
-    { id: 1, color: '#4169E1', angle: 0, zIndex: 2 },     // Blue - above green
-    { id: 2, color: '#FA8072', angle: 60, zIndex: 3 },    // Salmon
-    { id: 3, color: '#DC143C', angle: 120, zIndex: 4 },   // Crimson
-    { id: 4, color: '#FFD700', angle: 180, zIndex: 5 },   // Gold
-    { id: 5, color: '#FFFFFF', angle: 240, zIndex: 6 },   // White - highest
+    { id: 1, color: '#4169E1', angle: 300, zIndex: 6 },   // Blue
+    { id: 2, color: '#228B22', angle: 0, zIndex: 5 },     // Green
+    { id: 3, color: '#FFFFFF', angle: 60, zIndex: 4 },    // White
+    { id: 4, color: '#FFD700', angle: 120, zIndex: 3 },   // Gold
+    { id: 5, color: '#DC143C', angle: 180, zIndex: 2 },   // Crimson
+    { id: 6, color: '#FA8072', angle: 240, zIndex: 1 },   // Salmon
   ]
 
   const handleColorSelect = (color) => {
@@ -51,7 +51,9 @@ const ChooseColor = ({ navigation }) => {
                 {
                   backgroundColor: section.color,
                   transform: [
-                    { rotate: `${section.angle}deg` }
+                    { rotate: `${section.angle}deg` },
+                    { skewX: '0deg' },  // Add skew to create rhombus
+                    { skewY: '30deg' }   // Add skew to create rhombus
                   ],
                   zIndex: section.zIndex,
                 }
@@ -156,13 +158,12 @@ const styles = StyleSheet.create({
   },
   colorSection: {
     position: 'absolute',
-    width: 150,    // Half of the wheel width
-    height: 150,   // Half of the wheel height
-    left: 150,     // Center horizontally
-    top: 150,      // Center vertically
-    marginLeft: 0, // Negative half of section width
-    marginTop: 0,  // Negative half of section height
-    // transform: [{ rotate: '0deg' }],  // Will be set dynamically
+    width: 150,    // Adjusted for rhombus shape
+    height: 150,   // Adjusted for rhombus shape
+    left: 150,     
+    top: 150,      
+    // marginLeft: -53, // Half of new width
+    // marginTop: -53,  // Half of new height
     transformOrigin: '0 0',
     borderWidth: 1,
     borderColor: '#333',
