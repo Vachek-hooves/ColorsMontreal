@@ -6,13 +6,13 @@ const ChooseColor = ({ navigation }) => {
   const [selectedColor, setSelectedColor] = useState(null)
 
   const colorSections = [
-    { id: 1, color: '#4169E1', angle: 0 },     // Blue - starts at 0 degrees
-    { id: 2, color: '#FA8072', angle: 60 },    // Salmon
-    { id: 3, color: '#DC143C', angle: 120 },   // Crimson
-    { id: 4, color: '#FFD700', angle: 180 },   // Gold
-    { id: 5, color: '#FFFFFF', angle: 240 },   // White
-    { id: 6, color: '#228B22', angle: 300 },   // Forest Green
-  ].reverse() // Reverse the array to fix layering
+    { id: 6, color: '#228B22', angle: 300, zIndex: 1 },   // Forest Green - lowest
+    { id: 1, color: '#4169E1', angle: 0, zIndex: 2 },     // Blue - above green
+    { id: 2, color: '#FA8072', angle: 60, zIndex: 3 },    // Salmon
+    { id: 3, color: '#DC143C', angle: 120, zIndex: 4 },   // Crimson
+    { id: 4, color: '#FFD700', angle: 180, zIndex: 5 },   // Gold
+    { id: 5, color: '#FFFFFF', angle: 240, zIndex: 6 },   // White - highest
+  ]
 
   const handleColorSelect = (color) => {
     setSelectedColor(color)
@@ -53,7 +53,7 @@ const ChooseColor = ({ navigation }) => {
                   transform: [
                     { rotate: `${section.angle}deg` }
                   ],
-                  zIndex: 7 - section.id, // Higher zIndex for earlier sections
+                  zIndex: section.zIndex,
                 }
               ]}
               onPress={() => handleColorSelect(section.color)}
