@@ -106,7 +106,7 @@ const MainScreen = ({ navigation }) => {
 
       {/* Buttons Section */}
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('ChooseColor')}>
           <Text style={styles.buttonText}>CHOOSE A COLOR</Text>
         </TouchableOpacity>
 
