@@ -64,7 +64,7 @@ const ChooseColor = ({ navigation }) => {
         <TouchableOpacity 
           style={[
             styles.button,
-            { opacity: selectedColor ? 1 : 0.5 }
+            { opacity: selectedColor ? 1 : 0.9 }
           ]}
           disabled={!selectedColor}
         >
@@ -148,16 +148,23 @@ const styles = StyleSheet.create({
     width: 300,
     height: 300,
     position: 'relative',
+    borderRadius: 150,
+    borderWidth: 2,
+    borderColor: '#333',
+    overflow: 'hidden',
   },
   colorSection: {
     position: 'absolute',
-    width: '50%',
-    height: '50%',
-    left: '25%',
-    top: '25%',
-    transformOrigin: 'bottom',
-    borderRadius: 150,
-    overflow: 'hidden',
+    width: 150,    // Half of the wheel width
+    height: 150,   // Half of the wheel height
+    left: 150,     // Center horizontally
+    top: 150,      // Center vertically
+    marginLeft: 0, // Negative half of section width
+    marginTop: 0,  // Negative half of section height
+    transform: [{ rotate: '0deg' }],  // Will be set dynamically
+    transformOrigin: '0 0',
+    borderWidth: 1,
+    borderColor: '#333',
   },
   button: {
     backgroundColor: '#FFA500',
