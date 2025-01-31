@@ -43,7 +43,7 @@ const Onboarding = ({navigation}) => {
     if (currentSlideIndex < slides.length - 1) {
       setCurrentSlideIndex(currentSlideIndex + 1);
     } else {
-      navigation.navigate('TabNavBar');
+      navigation.navigate('MainScreen');
     }
   };
 
