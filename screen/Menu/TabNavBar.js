@@ -5,7 +5,7 @@ const Tab = createBottomTabNavigator();
 import Home from '../Tab/Home';
 const TabNavBar = () => {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator screenOptions={{headerShown: false}}>
       <Tab.Screen name="Home" component={Home} />
     </Tab.Navigator>
   );

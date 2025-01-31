@@ -3,6 +3,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {MontrealProvider} from './store/context';
 import Welcome from './screen/Stack/Welcome';
 import Onboarding from './screen/Stack/Onboarding';
+import TabNavBar from './screen/Menu/TabNavBar';
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -12,6 +13,7 @@ export default function App() {
         <Stack.Navigator screenOptions={{headerShown: false}}>
           <Stack.Screen name="Welcome" component={Welcome} />
           <Stack.Screen name="Onboarding" component={Onboarding} />
+          <Stack.Screen name="TabNavBar" component={TabNavBar} />
         </Stack.Navigator>
       </NavigationContainer>
     </MontrealProvider>
