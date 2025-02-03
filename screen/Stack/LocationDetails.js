@@ -6,20 +6,23 @@ import { getRandomLocationByColor } from '../../data/locations'
 const LocationDetails = ({ route, navigation }) => {
   const { color } = route.params
   const location = getRandomLocationByColor(color)
-  console.log(location)
   
-  // const colorName = color === '#4169E1' ? 'Royal Blue' : 
-  //                  color === '#228B22' ? 'Forest Green' : 
-  //                  // ... add other color names
+  const colorName = color === '#4169E1' ? 'Royal Blue' : 
+                   color === '#228B22' ? 'Forest Green' : 
+                   color === '#FFFFFF' ? 'Snow White' :
+                   color === '#FFD700' ? 'Amber Yellow' :
+                   color === '#DC143C' ? 'Crimson Red' :
+                   color === '#FA8072' ? 'Terracotta' : ''
 
   return (
     <SafeAreaView style={styles.container}>
       {/* Image Container */}
-      <View style={[styles.imageContainer,]}>
+      <View style={[styles.imageContainer, { backgroundColor: color }]}>
         <Image
-          source={location.image}
+          source={{ uri: location.image }}
           style={styles.image}
           resizeMode="cover"
+          defaultSource={require('../../assets/image/placeholder.png')}
         />
         {/* <Text style={styles.colorName}>{colorName}</Text> */}
       </View>
@@ -76,6 +79,7 @@ const styles = StyleSheet.create({
   image: {
     width: '100%',
     height: '100%',
+    backgroundColor: '#180D0C',
   },
   colorName: {
     position: 'absolute',
