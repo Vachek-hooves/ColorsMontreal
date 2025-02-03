@@ -14,6 +14,7 @@ import CustomLocationDetails from './screen/Stack/CustomLocationDetails';
 import FavoritesLocations from './screen/Stack/FavoritesLocations';
 import FavoritesDetails from './screen/Stack/FavoritesDetails';
 import InterestingFacts from './screen/Stack/InterestingFacts';
+import ShowFact from './screen/Stack/ShowFact';
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -40,6 +41,7 @@ export default function App() {
           />
           <Stack.Screen name="FavoritesDetails" component={FavoritesDetails} />
           <Stack.Screen name="InterestingFacts" component={InterestingFacts} />
+          <Stack.Screen name="ShowFact" component={ShowFact} />
         </Stack.Navigator>
       </NavigationContainer>
     </MontrealProvider>

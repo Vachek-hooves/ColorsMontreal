@@ -8,8 +8,24 @@ import {
   Animated,
 } from 'react-native';
 import OrbitCircles from '../../components/ui/OrbitCircles';
+import {useState} from 'react';
+import FactLoading from './FactLoading';
 
 const InterestingFacts = ({navigation}) => {
+  const [isFactLoading, setIsFactLoading] = useState(false);
+
+  const findFact = () => {
+    setIsFactLoading(true);
+
+    setTimeout(() => {
+      setIsFactLoading(false);
+      navigation.navigate('ShowFact');
+    }, 1500);
+  };
+
+  if (isFactLoading) {
+    return <FactLoading />;
+  }
   return (
     <SafeAreaView style={styles.container}>
       {/* Header */}
@@ -32,9 +48,7 @@ const InterestingFacts = ({navigation}) => {
       </View>
 
       {/* Button */}
-      <Pressable
-        style={styles.button}
-        onPress={() => navigation.navigate('FactsList')}>
+      <Pressable style={styles.button} onPress={findFact}>
         <Text style={styles.buttonText}>FIND OUT THE FACTS</Text>
       </Pressable>
     </SafeAreaView>
