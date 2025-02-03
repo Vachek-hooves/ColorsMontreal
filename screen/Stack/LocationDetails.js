@@ -235,6 +235,10 @@ const styles = StyleSheet.create({
     width: 34,
     height: 34,
   },
+  bookmarkIcon: {
+    width: 34,
+    height: 34,
+  },
 });
 
 export default LocationDetails;
