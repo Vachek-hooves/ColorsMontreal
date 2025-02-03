@@ -13,12 +13,14 @@ import {
 } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { useMontrealContext } from '../../store/context';
+import { launchImageLibrary } from 'react-native-image-picker';
 
 const CreateLocation = ({ navigation }) => {
   const { addCustomLocation } = useMontrealContext();
   const [isMapVisible, setIsMapVisible] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
   const [newLocation, setNewLocation] = useState({
-    id: Date.now(), // Generate unique ID
+    id: Date.now(),
     name: '',
     title: '',
     description: '',
@@ -30,6 +32,37 @@ const CreateLocation = ({ navigation }) => {
     category: '',
   });
 
+  const handleImagePick = async () => {
+    const options = {
+      mediaType: 'photo',
+      includeBase64: true,
+      maxHeight: 2000,
+      maxWidth: 2000,
+    };
+
+    try {
+      const result = await launchImageLibrary(options);
+      
+      if (result.didCancel) {
+        return;
+      }
+
+      if (result.errorCode) {
+        Alert.alert('Error', 'Failed to pick image');
+        return;
+      }
+
+      const selectedAsset = result.assets[0];
+      setSelectedImage(selectedAsset);
+      setNewLocation(prev => ({
+        ...prev,
+        image: `data:${selectedAsset.type};base64,${selectedAsset.base64}`
+      }));
+    } catch (error) {
+      Alert.alert('Error', 'Failed to pick image');
+    }
+  };
+
   const handleMapPress = (event) => {
     const { latitude, longitude } = event.nativeEvent.coordinate;
     setNewLocation(prev => ({
@@ -40,14 +73,11 @@ const CreateLocation = ({ navigation }) => {
   };
 
   const handleSave = async () => {
-    // Validate form
-    if (!newLocation.name || !newLocation.description || !newLocation.image) {
-      // Show error message
-      Alert.alert('Error', 'Please fill in all required fields');
+    if (!newLocation.name || !newLocation.description || !selectedImage) {
+      Alert.alert('Error', 'Please fill in all required fields and select an image');
       return;
     }
 
-    // Save to context/AsyncStorage
     const success = await addCustomLocation(newLocation);
     
     if (success) {
@@ -73,6 +103,29 @@ const CreateLocation = ({ navigation }) => {
       <ScrollView style={styles.scrollView}>
         {/* Form Fields */}
         <View style={styles.formContainer}>
+          {/* Image Picker */}
+          <View style={styles.imagePickerContainer}>
+            <Pressable 
+              style={styles.imagePickerButton} 
+              onPress={handleImagePick}
+            >
+              {selectedImage ? (
+                <Image
+                  source={{ uri: selectedImage.uri }}
+                  style={styles.selectedImage}
+                />
+              ) : (
+                <View style={styles.placeholderContainer}>
+                  <Image
+                    source={require('../../assets/icons/camera.png')}
+                    style={styles.cameraIcon}
+                  />
+                  <Text style={styles.placeholderText}>Select Image</Text>
+                </View>
+              )}
+            </Pressable>
+          </View>
+
           <View style={styles.inputGroup}>
             <Text style={styles.label}>Location Name</Text>
             <TextInput
@@ -105,17 +158,6 @@ const CreateLocation = ({ navigation }) => {
               placeholderTextColor="#666"
               multiline
               numberOfLines={4}
-            />
-          </View>
-
-          <View style={styles.inputGroup}>
-            <Text style={styles.label}>Image URL</Text>
-            <TextInput
-              style={styles.input}
-              value={newLocation.image}
-              onChangeText={(text) => setNewLocation(prev => ({ ...prev, image: text }))}
-              placeholder="Enter image URL"
-              placeholderTextColor="#666"
             />
           </View>
 
@@ -278,6 +320,35 @@ const styles = StyleSheet.create({
   closeButtonText: {
     color: '#000000',
     fontWeight: 'bold',
+  },
+  imagePickerContainer: {
+    marginBottom: 20,
+  },
+  imagePickerButton: {
+    height: 200,
+    backgroundColor: '#2A1F1E',
+    borderRadius: 12,
+    overflow: 'hidden',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  selectedImage: {
+    width: '100%',
+    height: '100%',
+    resizeMode: 'cover',
+  },
+  placeholderContainer: {
+    alignItems: 'center',
+  },
+  cameraIcon: {
+    width: 40,
+    height: 40,
+    tintColor: '#FFA500',
+    marginBottom: 8,
+  },
+  placeholderText: {
+    color: '#FFFFFF',
+    fontSize: 16,
   },
 });
 
