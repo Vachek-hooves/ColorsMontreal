@@ -10,14 +10,14 @@ import {
   ScrollView,
 } from 'react-native';
 import {getRandomLocationByColor} from '../../data/locations';
-import { useMontrealContext } from '../../store/context';
+import {useMontrealContext} from '../../store/context';
 // import Icon from 'react-native-vector-icons/Ionicons'
 
 const LocationDetails = ({route, navigation}) => {
   const {color} = route.params;
   const location = getRandomLocationByColor(color);
-  const { toggleFavorite, isFavorite } = useMontrealContext();
-
+  const {toggleFavorite, isFavorite} = useMontrealContext();
+  console.log(location.name);
   const colorName =
     color === '#4169E1'
       ? 'Royal Blue'
@@ -63,7 +63,13 @@ const LocationDetails = ({route, navigation}) => {
 
         {/* Action Buttons */}
         <View style={styles.actionContainer}>
-          <Pressable style={styles.mapButton} onPress={() => {}}>
+          <Pressable
+            style={styles.mapButton}
+            onPress={() => navigation.navigate('MapLocation', {
+                latitude: location.coordinates.latitude,
+                longitude: location.coordinates.longitude,
+                name: location.name,
+              })}>
             <Image
               source={require('../../assets/icons/map.png')}
               style={styles.mapIcon}
@@ -71,18 +77,17 @@ const LocationDetails = ({route, navigation}) => {
             <Text style={styles.buttonText}>Open on the map</Text>
           </Pressable>
 
-          <Pressable 
+          <Pressable
             style={[
               styles.bookmarkButton,
-              isFavorite(location.id) && styles.bookmarkButtonActive
-            ]} 
-            onPress={handleBookmark}
-          >
+              isFavorite(location.id) && styles.bookmarkButtonActive,
+            ]}
+            onPress={handleBookmark}>
             <Image
               source={require('../../assets/icons/bookmark.png')}
               style={[
                 styles.bookmarkIcon,
-                isFavorite(location.id) && styles.bookmarkIconActive
+                isFavorite(location.id) && styles.bookmarkIconActive,
               ]}
             />
           </Pressable>

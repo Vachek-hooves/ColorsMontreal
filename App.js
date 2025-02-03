@@ -7,6 +7,7 @@ import TabNavBar from './screen/Menu/TabNavBar';
 import MainScreen from './screen/Stack/MainScreen';
 import ChooseColor from './screen/Stack/ChooseColor';
 import LocationDetails from './screen/Stack/LocationDetails';
+import MapLocation from './components/ui/MapLocation';
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -20,6 +21,7 @@ export default function App() {
           <Stack.Screen name="MainScreen" component={MainScreen} />
           <Stack.Screen name="ChooseColor" component={ChooseColor} />
           <Stack.Screen name="LocationDetails" component={LocationDetails} />
+          <Stack.Screen name="MapLocation" component={MapLocation} />
         </Stack.Navigator>
       </NavigationContainer>
     </MontrealProvider>
