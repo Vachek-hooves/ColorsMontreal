@@ -13,6 +13,7 @@ import LocationSearching from './LocationSearching';
 
 const ChooseColor = ({navigation}) => {
   const [selectedColor, setSelectedColor] = useState(null);
+  const [isSearching, setIsSearching] = useState(false);
 
   const colorSections = [
     {id: 1, color: '#4169E1', angle: 300, zIndex: 6}, // Blue
@@ -24,9 +25,24 @@ const ChooseColor = ({navigation}) => {
   ];
 
   const handleColorSelect = color => {
-    
     setSelectedColor(color);
   };
+
+  const handleSearch = () => {
+    if (selectedColor) {
+      setIsSearching(true);
+
+      // Wait 1.5 seconds then navigate
+      setTimeout(() => {
+        setIsSearching(false);
+        navigation.navigate('LocationDetails', {color: selectedColor});
+      }, 1500);
+    }
+  };
+
+  if (isSearching) {
+    return <LocationSearching />;
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -67,18 +83,9 @@ const ChooseColor = ({navigation}) => {
 
         {/* Updated Search Button */}
         <Pressable
-          style={({pressed}) => [
-            styles.button,
-            !selectedColor && styles.buttonInactive,
-            pressed && styles.buttonPressed,
-          ]}
+          style={[styles.button, !selectedColor && styles.buttonInactive]}
           disabled={!selectedColor}
-          onPress={() => {
-            if (selectedColor) {
-              // Navigate or handle search
-              console.log('Starting search with color:', selectedColor);
-            }
-          }}>
+          onPress={handleSearch}>
           <Text
             style={[
               styles.buttonText,
