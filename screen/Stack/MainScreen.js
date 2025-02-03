@@ -27,7 +27,9 @@ const MainScreen = ({navigation}) => {
           <Text style={styles.buttonText}>CHOOSE A COLOR</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.navigate('SavedLocations')}>
           <Text style={styles.buttonText}>SAVED LOCATIONS</Text>
         </TouchableOpacity>
 
