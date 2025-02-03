@@ -1,112 +1,29 @@
-import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, Animated, Easing } from 'react-native'
-import React, { useEffect, useRef } from 'react'
-import Pulsation from '../../components/ui/Pulsation'
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  SafeAreaView,
+} from 'react-native';
+import OrbitCircles from '../../components/ui/OrbitCircles';
+import Logo from '../../components/ui/Logo';
 
-const MainScreen = ({ navigation }) => {
-  const orangeCircleAnim = useRef(new Animated.Value(0)).current
-  const yellowCircleAnim = useRef(new Animated.Value(0)).current
-  const pulsateAnim = useRef(new Animated.Value(1)).current
-
-  useEffect(() => {
-    // Pulsation animation for all circles
-    Animated.loop(
-      Animated.sequence([
-        Animated.timing(pulsateAnim, {
-          toValue: 1.2,
-          duration: 1000,
-          easing: Easing.ease,
-          useNativeDriver: true,
-        }),
-        Animated.timing(pulsateAnim, {
-          toValue: 1,
-          duration: 1000,
-          easing: Easing.ease,
-          useNativeDriver: true,
-        }),
-      ])
-    ).start()
-
-    // Orange circle orbit animation
-    Animated.loop(
-      Animated.timing(orangeCircleAnim, {
-        toValue: 1,
-        duration: 4000,
-        easing: Easing.linear,
-        useNativeDriver: true,
-      })
-    ).start()
-
-    // Yellow circle orbit animation (opposite direction)
-    Animated.loop(
-      Animated.timing(yellowCircleAnim, {
-        toValue: 1,
-        duration: 5000,
-        easing: Easing.linear,
-        useNativeDriver: true,
-      })
-    ).start()
-  }, [])
-
-  const orangeCircleTransform = {
-    transform: [
-      {
-        translateX: -70,
-      },
-      {
-        rotate: orangeCircleAnim.interpolate({
-          inputRange: [0, 1],
-          outputRange: ['0deg', '360deg'],
-        }),
-      },
-      {
-        translateX: 70,
-      },
-      {
-        scale: pulsateAnim,
-      },
-    ],
-  }
-
-  const yellowCircleTransform = {
-    transform: [
-      {
-        translateX: -70,
-      },
-      {
-        rotate: yellowCircleAnim.interpolate({
-          inputRange: [0, 1],
-          outputRange: ['360deg', '0deg'],
-        }),
-      },
-      {
-        translateX: 70,
-      },
-      {
-        scale: pulsateAnim,
-      },
-    ],
-  }
-
+const MainScreen = ({navigation}) => {
   return (
     <SafeAreaView style={styles.container}>
       {/* Logo Section */}
       <View style={styles.logoContainer}>
-        <Animated.View style={[styles.logoCircle, { transform: [{ scale: pulsateAnim }] }]}>
-          <Animated.View style={[styles.centerCircle, { transform: [{ scale: pulsateAnim }] }]} />
-          <Animated.View
-            style={[styles.orbitCircle, styles.orangeCircle, orangeCircleTransform]}
-          />
-          <Animated.View
-            style={[styles.orbitCircle, styles.yellowCircle, yellowCircleTransform]}
-          />
-        </Animated.View>
+        <OrbitCircles />
+
         <Text style={styles.logoText}>C O L O R S</Text>
         <Text style={styles.subText}>MONTREAL</Text>
       </View>
 
       {/* Buttons Section */}
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('ChooseColor')}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.navigate('ChooseColor')}>
           <Text style={styles.buttonText}>CHOOSE A COLOR</Text>
         </TouchableOpacity>
 
@@ -119,10 +36,10 @@ const MainScreen = ({ navigation }) => {
         </TouchableOpacity>
       </View>
     </SafeAreaView>
-  )
-}
+  );
+};
 
-export default MainScreen
+export default MainScreen;
 
 const styles = StyleSheet.create({
   container: {
@@ -159,7 +76,7 @@ const styles = StyleSheet.create({
     top: '45%',
     left: '75%',
     marginLeft: -10, // Half of width
-    marginTop: -10,  // Half of height
+    marginTop: -10, // Half of height
   },
   orangeCircle: {
     backgroundColor: '#FFA500',
@@ -198,4 +115,4 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     paddingVertical: 15,
   },
-})
+});
