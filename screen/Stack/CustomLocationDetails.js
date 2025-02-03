@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   StyleSheet,
   Text,
@@ -7,13 +7,16 @@ import {
   ScrollView,
   Pressable,
   Image,
+  Modal,
   Alert,
 } from 'react-native';
+import MapView, { Marker } from 'react-native-maps';
 import { useMontrealContext } from '../../store/context';
 
 const CustomLocationDetails = ({ route, navigation }) => {
   const { locationId } = route.params;
   const { customLocations, deleteCustomLocation } = useMontrealContext();
+  const [isMapVisible, setIsMapVisible] = useState(false);
   
   const location = customLocations.find(loc => loc.id === locationId);
 
@@ -70,25 +73,35 @@ const CustomLocationDetails = ({ route, navigation }) => {
             </Text>
           </View>
         </View>
+
+        {/* Map Preview */}
+        <View style={styles.mapPreviewContainer}>
+          <Text style={styles.sectionTitle}>Location</Text>
+          <Pressable onPress={() => setIsMapVisible(true)}>
+            <View style={styles.mapPreview}>
+              <MapView
+                style={styles.previewMap}
+                region={{
+                  latitude: location.coordinates.latitude,
+                  longitude: location.coordinates.longitude,
+                  latitudeDelta: 0.01,
+                  longitudeDelta: 0.01,
+                }}
+                scrollEnabled={false}
+                zoomEnabled={false}
+              >
+                <Marker coordinate={location.coordinates} />
+              </MapView>
+              <View style={styles.mapOverlay}>
+                <Text style={styles.mapOverlayText}>Tap to view full map</Text>
+              </View>
+            </View>
+          </Pressable>
+        </View>
       </ScrollView>
 
       {/* Action Buttons */}
       <View style={styles.actionContainer}>
-        <Pressable
-          style={styles.mapButton}
-          onPress={() => navigation.navigate('MapLocation', {
-            latitude: location.coordinates.latitude,
-            longitude: location.coordinates.longitude,
-            name: location.name,
-          })}
-        >
-          <Image
-            source={require('../../assets/icons/map.png')}
-            style={styles.mapIcon}
-          />
-          <Text style={styles.buttonText}>Open on the map</Text>
-        </Pressable>
-
         <Pressable
           style={styles.deleteButton}
           onPress={handleDelete}
@@ -99,6 +112,33 @@ const CustomLocationDetails = ({ route, navigation }) => {
           />
         </Pressable>
       </View>
+
+      {/* Map Modal */}
+      <Modal
+        visible={isMapVisible}
+        animationType="slide"
+        onRequestClose={() => setIsMapVisible(false)}
+      >
+        <View style={styles.modalContainer}>
+          <MapView
+            style={styles.fullMap}
+            initialRegion={{
+              latitude: location.coordinates.latitude,
+              longitude: location.coordinates.longitude,
+              latitudeDelta: 0.02,
+              longitudeDelta: 0.02,
+            }}
+          >
+            <Marker coordinate={location.coordinates} title={location.name} />
+          </MapView>
+          <Pressable
+            style={styles.closeButton}
+            onPress={() => setIsMapVisible(false)}
+          >
+            <Text style={styles.closeButtonText}>Close</Text>
+          </Pressable>
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 };
@@ -167,21 +207,6 @@ const styles = StyleSheet.create({
     padding: 20,
     gap: 12,
   },
-  mapButton: {
-    flex: 1,
-    flexDirection: 'row',
-    backgroundColor: '#FFA500',
-    padding: 16,
-    borderRadius: 12,
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 8,
-  },
-  buttonText: {
-    color: '#000000',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
   deleteButton: {
     width: 52,
     height: 52,
@@ -191,14 +216,62 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  mapIcon: {
-    width: 24,
-    height: 24,
-  },
   deleteIcon: {
     width: 24,
     height: 24,
     tintColor: '#FFA500',
+  },
+  mapPreviewContainer: {
+    padding: 20,
+  },
+  sectionTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#FFFFFF',
+    marginBottom: 12,
+  },
+  mapPreview: {
+    height: 200,
+    borderRadius: 12,
+    overflow: 'hidden',
+    position: 'relative',
+  },
+  previewMap: {
+    ...StyleSheet.absoluteFillObject,
+  },
+  mapOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(0,0,0,0.2)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  mapOverlayText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: 'bold',
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    padding: 8,
+    borderRadius: 8,
+  },
+  modalContainer: {
+    flex: 1,
+    backgroundColor: '#180D0C',
+  },
+  fullMap: {
+    flex: 1,
+  },
+  closeButton: {
+    position: 'absolute',
+    top: 40,
+    right: 20,
+    backgroundColor: '#FFA500',
+    padding: 12,
+    borderRadius: 8,
+    zIndex: 1,
+  },
+  closeButtonText: {
+    color: '#000000',
+    fontWeight: 'bold',
   },
 });
 
