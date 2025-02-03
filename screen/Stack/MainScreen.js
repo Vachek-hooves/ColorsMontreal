@@ -3,7 +3,7 @@ import {
   Text,
   View,
   TouchableOpacity,
-  SafeAreaView,
+  SafeAreaView,ScrollView
 } from 'react-native';
 import OrbitCircles from '../../components/ui/OrbitCircles';
 import Logo from '../../components/ui/Logo';
@@ -11,6 +11,7 @@ import Logo from '../../components/ui/Logo';
 const MainScreen = ({navigation}) => {
   return (
     <SafeAreaView style={styles.container}>
+      <ScrollView>
       {/* Logo Section */}
       <View style={styles.logoContainer}>
         <OrbitCircles />
@@ -36,8 +37,12 @@ const MainScreen = ({navigation}) => {
         <TouchableOpacity style={styles.button}>
           <Text style={styles.buttonText}>INTERESTING FACTS</Text>
         </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('FavoritesLocations')}>
+          <Text style={styles.buttonText}>FAVORITES</Text>
+        </TouchableOpacity>
       </View>
-    </SafeAreaView>
+    </ScrollView>
+      </SafeAreaView>
   );
 };
 
@@ -53,6 +58,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    marginBottom: 30,
   },
   logoCircle: {
     width: 200,
