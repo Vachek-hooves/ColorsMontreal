@@ -9,6 +9,7 @@ import {
 import React, {useState} from 'react';
 // import Icon from 'react-native-vector-icons/Ionicons'
 import Logo from '../../components/ui/Logo';
+import LocationSearching from './LocationSearching';
 
 const ChooseColor = ({navigation}) => {
   const [selectedColor, setSelectedColor] = useState(null);
@@ -23,6 +24,7 @@ const ChooseColor = ({navigation}) => {
   ];
 
   const handleColorSelect = color => {
+    
     setSelectedColor(color);
   };
 
