@@ -9,6 +9,7 @@ import ChooseColor from './screen/Stack/ChooseColor';
 import LocationDetails from './screen/Stack/LocationDetails';
 import MapLocation from './components/ui/MapLocation';
 import SavedLocations from './screen/Stack/SavedLocations';
+import CreateLocation from './screen/Stack/CreateLocation';
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -24,6 +25,7 @@ export default function App() {
           <Stack.Screen name="LocationDetails" component={LocationDetails} />
           <Stack.Screen name="MapLocation" component={MapLocation} />
           <Stack.Screen name="SavedLocations" component={SavedLocations} />
+          <Stack.Screen name="CreateLocation" component={CreateLocation} />
         </Stack.Navigator>
       </NavigationContainer>
     </MontrealProvider>
