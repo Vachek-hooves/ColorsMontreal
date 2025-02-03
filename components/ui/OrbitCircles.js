@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     position: 'relative',
-    marginTop: 100,
+    marginTop: 20,
   },
   centerCircle: {
     width: 60,

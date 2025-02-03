@@ -6,7 +6,6 @@ import {
   Image,
   Pressable,
   SafeAreaView,
-  ImageBackground,
   ScrollView,
 } from 'react-native';
 import {getRandomLocationByColor} from '../../data/locations';
@@ -15,10 +14,18 @@ import Logo from '../../components/ui/Logo';
 // import Icon from 'react-native-vector-icons/Ionicons'
 
 const LocationDetails = ({route, navigation}) => {
-  const {color} = route.params;
-  const location = getRandomLocationByColor(color);
-  const {toggleFavorite, isFavorite} = useMontrealContext();
-  // console.log(location.name);
+  const {color, locationId} = route.params;
+  const {toggleFavorite, isFavorite, customLocations} = useMontrealContext();
+
+  // Try to find custom location first
+  const customLocation = customLocations.find(loc => loc.id === locationId);
+  // If not found, get random location by color
+  const location = customLocation || getRandomLocationByColor(color);
+
+  if (!location) {
+    return null;
+  }
+
   const colorName =
     color === '#4169E1'
       ? 'Royal Blue'
@@ -42,25 +49,35 @@ const LocationDetails = ({route, navigation}) => {
   return (
     <SafeAreaView style={styles.container}>
       {/* <Logo /> */}
+      <Logo />
       <ScrollView>
         {/* Image Container */}
-        <View
-          style={[styles.imageContainer, {backgroundColor: color, padding: 5}]}>
-          {/* <ImageBackground
-            source={{uri: location.image}}
-            style={styles.image}
-            resizeMode="cover"
-            defaultSource={require('../../assets/image/placeholder.png')}>
+        <View style={[styles.imageContainer, {backgroundColor: color, padding: 5}]}>
+          {location.image ? (
+            <Image
+              source={{uri: location.image}}
+              style={styles.image}
+              resizeMode="cover"
+              defaultSource={require('../../assets/image/placeholder.png')}
+            />
+          ) : (
             <View style={[styles.colorNameContainer, {backgroundColor: color}]}>
               <Text style={styles.colorName}>{colorName}</Text>
             </View>
-          </ImageBackground> */}
+          )}
         </View>
 
         {/* Location Details */}
         <View style={styles.detailsContainer}>
-          <Text style={styles.title}>{location.name}</Text>
-          <Text style={styles.description}>{location.description}</Text>
+          <Text style={styles.title}>
+            {location.name || 'Unnamed Location'}
+          </Text>
+          <Text style={styles.description}>
+            {location.description || 'No description available'}
+          </Text>
+          {location.category && (
+            <Text style={styles.category}>Category: {location.category}</Text>
+          )}
         </View>
 
         {/* Action Buttons */}
@@ -69,9 +86,9 @@ const LocationDetails = ({route, navigation}) => {
             style={styles.mapButton}
             onPress={() =>
               navigation.navigate('MapLocation', {
-                latitude: location.coordinates.latitude,
-                longitude: location.coordinates.longitude,
-                name: location.name,
+                latitude: location.coordinates?.latitude || 45.5017,
+                longitude: location.coordinates?.longitude || -73.5673,
+                name: location.name || 'Location',
               })
             }>
             <Image
@@ -247,6 +264,12 @@ const styles = StyleSheet.create({
   bookmarkIcon: {
     width: 34,
     height: 34,
+  },
+  category: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginTop: 10,
   },
 });
 

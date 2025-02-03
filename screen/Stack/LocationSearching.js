@@ -36,6 +36,7 @@ const styles = StyleSheet.create({
   OrbitCirclesContainer: {
     justifyContent: 'center',
     alignItems: 'center',
+    marginTop: '20%',
   },
   loader: {
     marginTop: 20,

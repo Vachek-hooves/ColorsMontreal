@@ -99,7 +99,7 @@ const MapScreen = ({navigation}) => {
       {/* Home Button */}
       <Pressable
         style={styles.homeButton}
-        onPress={() => navigation.navigate('Home')}>
+        onPress={() => navigation.navigate('MainScreen')}>
         <Image
           source={require('../../assets/icons/home.png')}
           style={styles.homeIcon}

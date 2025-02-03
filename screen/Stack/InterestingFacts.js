@@ -10,6 +10,7 @@ import {
 import OrbitCircles from '../../components/ui/OrbitCircles';
 import {useState} from 'react';
 import FactLoading from './FactLoading';
+import Logo from '../../components/ui/Logo';
 
 const InterestingFacts = ({navigation}) => {
   const [isFactLoading, setIsFactLoading] = useState(false);
@@ -30,9 +31,10 @@ const InterestingFacts = ({navigation}) => {
     <SafeAreaView style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <Pressable onPress={() => navigation.goBack()}>
+        {/* <Pressable onPress={() => navigation.goBack()}>
           <Text style={styles.backButton}>←</Text>
-        </Pressable>
+        </Pressable> */}
+        <Logo />
         <Text style={styles.headerTitle}>Interesting facts</Text>
       </View>
 
@@ -61,7 +63,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#180D0C',
   },
   header: {
-    flexDirection: 'row',
+    // flexDirection: 'row',
     alignItems: 'center',
     padding: 20,
     gap: 16,
@@ -80,7 +82,7 @@ const styles = StyleSheet.create({
     // flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginVertical: '10%',
+    marginVertical: '5%',
   },
 
   content: {
