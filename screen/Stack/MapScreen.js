@@ -12,8 +12,8 @@ import MapView, {Marker, DEFAULT_PROVIDER} from 'react-native-maps';
 import {useMontrealContext} from '../../store/context';
 import {locations} from '../../data/locations';
 
-const MapScreen = ({navigation}) => {
-  const {customLocations} = useMontrealContext();
+const MapScreen = ({ navigation }) => {
+  const { customLocations, favorites } = useMontrealContext();
 
   // Combine all locations
   const allLocations = [...customLocations, ...locations];
@@ -27,43 +27,43 @@ const MapScreen = ({navigation}) => {
   };
 
   // Custom map style for dark theme
-  // const mapStyle = [
-  //   {
-  //     "elementType": "geometry",
-  //     "stylers": [{ "color": "#242f3e" }]
-  //   },
-  //   {
-  //     "elementType": "labels.text.fill",
-  //     "stylers": [{ "color": "#746855" }]
-  //   },
-  //   {
-  //     "elementType": "labels.text.stroke",
-  //     "stylers": [{ "color": "#242f3e" }]
-  //   },
-  //   {
-  //     "featureType": "road",
-  //     "elementType": "geometry",
-  //     "stylers": [{ "color": "#38414e" }]
-  //   },
-  //   {
-  //     "featureType": "road",
-  //     "elementType": "geometry.stroke",
-  //     "stylers": [{ "color": "#212a37" }]
-  //   },
-  //   {
-  //     "featureType": "water",
-  //     "elementType": "geometry",
-  //     "stylers": [{ "color": "#17263c" }]
-  //   }
-  // ];
+  const mapStyle = [
+    {
+      "elementType": "geometry",
+      "stylers": [{ "color": "#242f3e" }]
+    },
+    {
+      "elementType": "labels.text.fill",
+      "stylers": [{ "color": "#746855" }]
+    },
+    {
+      "elementType": "labels.text.stroke",
+      "stylers": [{ "color": "#242f3e" }]
+    },
+    {
+      "featureType": "road",
+      "elementType": "geometry",
+      "stylers": [{ "color": "#38414e" }]
+    },
+    {
+      "featureType": "road",
+      "elementType": "geometry.stroke",
+      "stylers": [{ "color": "#212a37" }]
+    },
+    {
+      "featureType": "water",
+      "elementType": "geometry",
+      "stylers": [{ "color": "#17263c" }]
+    }
+  ];
 
-  const handleMarkerPress = location => {
+  const handleMarkerPress = (location) => {
     if (location.isCustom) {
-      navigation.navigate('CustomLocationDetails', {locationId: location.id});
+      navigation.navigate('CustomLocationDetails', { locationId: location.id });
     } else {
-      navigation.navigate('LocationDetails', {
+      navigation.navigate('LocationDetails', { 
         locationId: location.id,
-        color: location.color,
+        color: location.color 
       });
     }
   };
@@ -74,23 +74,27 @@ const MapScreen = ({navigation}) => {
         provider={DEFAULT_PROVIDER}
         style={styles.map}
         initialRegion={initialRegion}
-        // customMapStyle={mapStyle}
+        customMapStyle={mapStyle}
       >
-        {allLocations.map(location => (
+        {allLocations.map((location) => (
           <Marker
             key={location.id}
             coordinate={location.coordinates}
-            onPress={() => handleMarkerPress(location)}>
-            <View
-              style={[
-                styles.markerContainer,
-                {
-                  backgroundColor: location.isCustom
-                    ? '#FFA500'
-                    : location.color || '#FFA500',
-                },
-              ]}>
-              <View style={styles.marker} />
+            onPress={() => handleMarkerPress(location)}
+          >
+            <View style={styles.markerWrapper}>
+              <Image
+                source={require('../../assets/icons/marker.png')}
+                style={[
+                  styles.markerIcon,
+                  { tintColor: location.isCustom ? '#FFA500' : location.color || '#FFA500' }
+                ]}
+              />
+              {location.name && (
+                <View style={styles.markerLabelContainer}>
+                  <Text style={styles.markerLabel}>{location.name}</Text>
+                </View>
+              )}
             </View>
           </Marker>
         ))}
@@ -99,7 +103,8 @@ const MapScreen = ({navigation}) => {
       {/* Home Button */}
       <Pressable
         style={styles.homeButton}
-        onPress={() => navigation.navigate('MainScreen')}>
+        onPress={() => navigation.navigate('MainScreen')}
+      >
         <Image
           source={require('../../assets/icons/home.png')}
           style={styles.homeIcon}
@@ -118,28 +123,33 @@ const styles = StyleSheet.create({
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
   },
-  markerContainer: {
-    width: 24,
-    height: 24,
-    borderRadius: 12,
+  markerWrapper: {
     alignItems: 'center',
-    justifyContent: 'center',
-    borderWidth: 2,
-    borderColor: '#FFFFFF',
   },
-  marker: {
-    width: 12,
-    height: 12,
-    borderRadius: 6,
-    backgroundColor: '#FFFFFF',
+  markerIcon: {
+    width: 32,
+    height: 32,
+    resizeMode: 'contain',
+  },
+  markerLabelContainer: {
+    backgroundColor: 'rgba(0,0,0,0.7)',
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 4,
+    marginTop: 4,
+  },
+  markerLabel: {
+    color: '#FFFFFF',
+    fontSize: 12,
+    fontWeight: 'bold',
   },
   homeButton: {
     position: 'absolute',
     bottom: 40,
     alignSelf: 'center',
     backgroundColor: '#FFA500',
-    width: 52,
-    height: 52,
+    // width: 52,
+    // height: 52,
     borderRadius: 12,
     alignItems: 'center',
     justifyContent: 'center',
@@ -151,11 +161,14 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
+    minWidth: 80,
+    padding: 15,
   },
   homeIcon: {
-    width: 24,
-    height: 24,
+    width: 34,
+    height: 34,
     tintColor: '#000000',
+    // padding: 15,
   },
 });
 

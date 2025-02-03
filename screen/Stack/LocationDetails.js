@@ -52,7 +52,8 @@ const LocationDetails = ({route, navigation}) => {
       <Logo />
       <ScrollView>
         {/* Image Container */}
-        <View style={[styles.imageContainer, {backgroundColor: color, padding: 5}]}>
+        <View
+          style={[styles.imageContainer, {backgroundColor: color, padding: 5}]}>
           {location.image ? (
             <Image
               source={{uri: location.image}}
@@ -118,7 +119,8 @@ const LocationDetails = ({route, navigation}) => {
         <View style={styles.bottomContainer}>
           <Pressable
             style={styles.searchAgainButton}
-            onPress={() => navigation.goBack()}>
+            // onPress={() => navigation.goBack()}
+          >
             <Text style={styles.buttonText}>SEARCH AGAIN</Text>
           </Pressable>
 

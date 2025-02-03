@@ -6,7 +6,8 @@ const Logo = () => {
 
   return (
     <View style={styles.header}>
-      <TouchableOpacity onPress={() => navigation.goBack()}>
+      {/* <TouchableOpacity onPress={() => navigation.goBack()}> */}
+      <TouchableOpacity>
         <Image
           source={require('../../assets/icons/back.png')}
           style={styles.backIcon}
@@ -30,11 +31,11 @@ export default Logo;
 
 const styles = StyleSheet.create({
   header: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      paddingHorizontal: 20,
-      paddingTop: 10,
-    },
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    paddingTop: 10,
+  },
   logoContainer: {
     flex: 1,
     alignItems: 'center',
