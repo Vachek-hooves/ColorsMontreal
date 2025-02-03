@@ -7,6 +7,7 @@ import {
   Pressable,
   SafeAreaView,
   ImageBackground,
+  ScrollView,
 } from 'react-native';
 import {getRandomLocationByColor} from '../../data/locations';
 // import Icon from 'react-native-vector-icons/Ionicons'
@@ -32,64 +33,63 @@ const LocationDetails = ({route, navigation}) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* Image Container */}
-      <View
-        style={[styles.imageContainer, {backgroundColor: color, padding: 5}]}>
-        <ImageBackground
-          source={{uri: location.image}}
-          style={styles.image}
-          resizeMode="cover"
-          defaultSource={require('../../assets/image/placeholder.png')}>
-          <View
-            style={{
-              // padding: 3,
-              backgroundColor: color,
-              width: '100%',
-              alignItems: 'center',
-              justifyContent: 'center',
-              position: 'absolute',
-              bottom: 0,
-              left: 0,
-              right: 0,
-            }}>
+      <ScrollView>
+        {/* Image Container */}
+        <View
+          style={[styles.imageContainer, {backgroundColor: color, padding: 5}]}>
+          <ImageBackground
+            source={{uri: location.image}}
+            style={styles.image}
+            resizeMode="cover"
+            defaultSource={require('../../assets/image/placeholder.png')}>
+            <View style={[styles.colorNameContainer, {backgroundColor: color}]}>
+              <Text style={styles.colorName}>{colorName}</Text>
+            </View>
+          </ImageBackground>
+        </View>
 
-            <Text style={styles.colorName}>{colorName}</Text>
-          </View>
-        </ImageBackground>
-      </View> 
+        {/* Location Details */}
+        <View style={styles.detailsContainer}>
+          <Text style={styles.title}>{location.name}</Text>
+          <Text style={styles.description}>{location.description}</Text>
+        </View>
 
-      {/* Location Details */}
-      <View style={styles.detailsContainer}>
-        <Text style={styles.title}>{location.name}</Text>
-        <Text style={styles.description}>{location.description}</Text>
-      </View>
+        {/* Action Buttons */}
+        <View style={styles.actionContainer}>
+          <Pressable style={styles.mapButton} onPress={() => {}}>
+            <Image
+              source={require('../../assets/icons/map.png')}
+              style={styles.mapIcon}
+            />
+            <Text style={styles.buttonText}>Open on the map</Text>
+          </Pressable>
 
-      {/* Action Buttons */}
-      <View style={styles.actionContainer}>
-        <Pressable style={styles.mapButton} onPress={() => {}}>
-          {/* <Icon name="map-outline" size={24} color="#000" /> */}
-          <Text style={styles.buttonText}>Open on the map</Text>
-        </Pressable>
+          <Pressable style={styles.bookmarkButton} onPress={() => {}}>
+            <Image
+              source={require('../../assets/icons/bookmark.png')}
+              style={styles.bookmarkIcon}
+            />
+          </Pressable>
+        </View>
 
-        <Pressable style={styles.bookmarkButton} onPress={() => {}}>
-          {/* <Icon name="bookmark-outline" size={24} color="#FFA500" /> */}
-        </Pressable>
-      </View>
+        {/* Bottom Buttons */}
+        <View style={styles.bottomContainer}>
+          <Pressable
+            style={styles.searchAgainButton}
+            onPress={() => navigation.goBack()}>
+            <Text style={styles.buttonText}>SEARCH AGAIN</Text>
+          </Pressable>
 
-      {/* Bottom Buttons */}
-      <View style={styles.bottomContainer}>
-        <Pressable
-          style={styles.searchAgainButton}
-          onPress={() => navigation.goBack()}>
-          <Text style={styles.searchAgainText}>SEARCH AGAIN</Text>
-        </Pressable>
-
-        <Pressable
-          style={styles.homeButton}
-          onPress={() => navigation.navigate('MainScreen')}>
-          {/* <Icon name="home-outline" size={24} color="#FFA500" /> */}
-        </Pressable>
-      </View>
+          <Pressable
+            style={styles.homeButton}
+            onPress={() => navigation.navigate('MainScreen')}>
+            <Image
+              source={require('../../assets/icons/home.png')}
+              style={styles.homeIcon}
+            />
+          </Pressable>
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };
@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 18,
     fontWeight: 'bold',
-    paddingVertical:6
+    paddingVertical: 6,
   },
   detailsContainer: {
     padding: 20,
@@ -155,15 +155,17 @@ const styles = StyleSheet.create({
     color: '#000',
     fontSize: 16,
     fontWeight: 'bold',
+    marginVertical: 16,
   },
   bookmarkButton: {
-    width: 50,
-    height: 50,
+    // width: 50,
+    // height: 50,
     borderRadius: 25,
     borderWidth: 2,
     borderColor: '#FFA500',
     alignItems: 'center',
     justifyContent: 'center',
+    minWidth: 80,
   },
   bottomContainer: {
     flexDirection: 'row',
@@ -184,14 +186,37 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   homeButton: {
-    width: 50,
-    height: 50,
+    // width: 50,
+    // height: 50,
     borderRadius: 25,
-    backgroundColor: '#180D0C',
+    backgroundColor: '#F0950D',
     borderWidth: 2,
     borderColor: '#FFA500',
     alignItems: 'center',
     justifyContent: 'center',
+    minWidth: 80,
+  },
+  colorNameContainer: {
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+  },
+  mapIcon: {
+    width: 32,
+    height: 32,
+  },
+  bookmarkIcon: {
+    width: 34,
+    height: 34,
+    // paddingHorizontal: 16,
+  },
+  homeIcon: {
+    width: 34,
+    height: 34,
   },
 });
 
