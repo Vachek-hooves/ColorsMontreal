@@ -1,31 +1,62 @@
-import React from 'react'
-import { StyleSheet, Text, View, Image, Pressable, SafeAreaView } from 'react-native'
-import { getRandomLocationByColor } from '../../data/locations'
+import React from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  Pressable,
+  SafeAreaView,
+  ImageBackground,
+} from 'react-native';
+import {getRandomLocationByColor} from '../../data/locations';
 // import Icon from 'react-native-vector-icons/Ionicons'
 
-const LocationDetails = ({ route, navigation }) => {
-  const { color } = route.params
-  const location = getRandomLocationByColor(color)
-  
-  const colorName = color === '#4169E1' ? 'Royal Blue' : 
-                   color === '#228B22' ? 'Forest Green' : 
-                   color === '#FFFFFF' ? 'Snow White' :
-                   color === '#FFD700' ? 'Amber Yellow' :
-                   color === '#DC143C' ? 'Crimson Red' :
-                   color === '#FA8072' ? 'Terracotta' : ''
+const LocationDetails = ({route, navigation}) => {
+  const {color} = route.params;
+  const location = getRandomLocationByColor(color);
+
+  const colorName =
+    color === '#4169E1'
+      ? 'Royal Blue'
+      : color === '#228B22'
+      ? 'Forest Green'
+      : color === '#FFFFFF'
+      ? 'Snow White'
+      : color === '#FFD700'
+      ? 'Amber Yellow'
+      : color === '#DC143C'
+      ? 'Crimson Red'
+      : color === '#FA8072'
+      ? 'Terracotta'
+      : '';
 
   return (
     <SafeAreaView style={styles.container}>
       {/* Image Container */}
-      <View style={[styles.imageContainer, { backgroundColor: color }]}>
-        <Image
-          source={{ uri: location.image }}
+      <View
+        style={[styles.imageContainer, {backgroundColor: color, padding: 5}]}>
+        <ImageBackground
+          source={{uri: location.image}}
           style={styles.image}
           resizeMode="cover"
-          defaultSource={require('../../assets/image/placeholder.png')}
-        />
-        {/* <Text style={styles.colorName}>{colorName}</Text> */}
-      </View>
+          defaultSource={require('../../assets/image/placeholder.png')}>
+          <View
+            style={{
+              // padding: 3,
+              backgroundColor: color,
+              width: '100%',
+              alignItems: 'center',
+              justifyContent: 'center',
+              position: 'absolute',
+              bottom: 0,
+              left: 0,
+              right: 0,
+            }}>
+
+            <Text style={styles.colorName}>{colorName}</Text>
+          </View>
+        </ImageBackground>
+      </View> 
 
       {/* Location Details */}
       <View style={styles.detailsContainer}>
@@ -47,23 +78,21 @@ const LocationDetails = ({ route, navigation }) => {
 
       {/* Bottom Buttons */}
       <View style={styles.bottomContainer}>
-        <Pressable 
+        <Pressable
           style={styles.searchAgainButton}
-          onPress={() => navigation.goBack()}
-        >
+          onPress={() => navigation.goBack()}>
           <Text style={styles.searchAgainText}>SEARCH AGAIN</Text>
         </Pressable>
 
-        <Pressable 
+        <Pressable
           style={styles.homeButton}
-          onPress={() => navigation.navigate('MainScreen')}
-        >
+          onPress={() => navigation.navigate('MainScreen')}>
           {/* <Icon name="home-outline" size={24} color="#FFA500" /> */}
         </Pressable>
       </View>
     </SafeAreaView>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -73,21 +102,24 @@ const styles = StyleSheet.create({
   imageContainer: {
     height: 300,
     borderRadius: 20,
-    margin: 20,
+    margin: 5,
     overflow: 'hidden',
   },
   image: {
     width: '100%',
     height: '100%',
     backgroundColor: '#180D0C',
+    borderRadius: 20,
+    overflow: 'hidden',
   },
   colorName: {
-    position: 'absolute',
-    bottom: 20,
-    left: 20,
+    // position: 'absolute',
+    // bottom: 20,
+    // left: 20,
     color: '#FFFFFF',
     fontSize: 18,
     fontWeight: 'bold',
+    paddingVertical:6
   },
   detailsContainer: {
     padding: 20,
@@ -161,6 +193,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-})
+});
 
-export default LocationDetails
+export default LocationDetails;
