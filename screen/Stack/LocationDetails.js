@@ -46,7 +46,7 @@ const LocationDetails = ({route, navigation}) => {
         {/* Image Container */}
         <View
           style={[styles.imageContainer, {backgroundColor: color, padding: 5}]}>
-          <ImageBackground
+          {/* <ImageBackground
             source={{uri: location.image}}
             style={styles.image}
             resizeMode="cover"
@@ -54,7 +54,7 @@ const LocationDetails = ({route, navigation}) => {
             <View style={[styles.colorNameContainer, {backgroundColor: color}]}>
               <Text style={styles.colorName}>{colorName}</Text>
             </View>
-          </ImageBackground>
+          </ImageBackground> */}
         </View>
 
         {/* Location Details */}

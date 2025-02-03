@@ -28,6 +28,11 @@ const MainScreen = ({navigation}) => {
             onPress={() => navigation.navigate('ChooseColor')}>
             <Text style={styles.buttonText}>CHOOSE A COLOR</Text>
           </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => navigation.navigate('MapScreen')}>
+            <Text style={styles.buttonText}>MAP</Text>
+          </TouchableOpacity>
 
           <TouchableOpacity
             style={styles.button}
