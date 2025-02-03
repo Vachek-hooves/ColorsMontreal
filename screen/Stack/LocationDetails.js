@@ -10,11 +10,13 @@ import {
   ScrollView,
 } from 'react-native';
 import {getRandomLocationByColor} from '../../data/locations';
+import { useMontrealContext } from '../../store/context';
 // import Icon from 'react-native-vector-icons/Ionicons'
 
 const LocationDetails = ({route, navigation}) => {
   const {color} = route.params;
   const location = getRandomLocationByColor(color);
+  const { toggleFavorite, isFavorite } = useMontrealContext();
 
   const colorName =
     color === '#4169E1'
@@ -30,6 +32,11 @@ const LocationDetails = ({route, navigation}) => {
       : color === '#FA8072'
       ? 'Terracotta'
       : '';
+
+  const handleBookmark = async () => {
+    const newStatus = await toggleFavorite(location);
+    // Optional: Add some visual feedback here
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -64,10 +71,19 @@ const LocationDetails = ({route, navigation}) => {
             <Text style={styles.buttonText}>Open on the map</Text>
           </Pressable>
 
-          <Pressable style={styles.bookmarkButton} onPress={() => {}}>
+          <Pressable 
+            style={[
+              styles.bookmarkButton,
+              isFavorite(location.id) && styles.bookmarkButtonActive
+            ]} 
+            onPress={handleBookmark}
+          >
             <Image
               source={require('../../assets/icons/bookmark.png')}
-              style={styles.bookmarkIcon}
+              style={[
+                styles.bookmarkIcon,
+                isFavorite(location.id) && styles.bookmarkIconActive
+              ]}
             />
           </Pressable>
         </View>
@@ -209,10 +225,11 @@ const styles = StyleSheet.create({
     width: 32,
     height: 32,
   },
-  bookmarkIcon: {
-    width: 34,
-    height: 34,
-    // paddingHorizontal: 16,
+  bookmarkButtonActive: {
+    backgroundColor: '#FFA50033', // Semi-transparent orange
+  },
+  bookmarkIconActive: {
+    tintColor: '#FFA500', // Orange color for active state
   },
   homeIcon: {
     width: 34,
