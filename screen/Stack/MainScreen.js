@@ -3,7 +3,8 @@ import {
   Text,
   View,
   TouchableOpacity,
-  SafeAreaView,ScrollView
+  SafeAreaView,
+  ScrollView,
 } from 'react-native';
 import OrbitCircles from '../../components/ui/OrbitCircles';
 import Logo from '../../components/ui/Logo';
@@ -12,37 +13,41 @@ const MainScreen = ({navigation}) => {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
-      {/* Logo Section */}
-      <View style={styles.logoContainer}>
-        <OrbitCircles />
+        {/* Logo Section */}
+        <View style={styles.logoContainer}>
+          <OrbitCircles />
 
-        <Text style={styles.logoText}>C O L O R S</Text>
-        <Text style={styles.subText}>MONTREAL</Text>
-      </View>
+          <Text style={styles.logoText}>C O L O R S</Text>
+          <Text style={styles.subText}>MONTREAL</Text>
+        </View>
 
-      {/* Buttons Section */}
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => navigation.navigate('ChooseColor')}>
-          <Text style={styles.buttonText}>CHOOSE A COLOR</Text>
-        </TouchableOpacity>
+        {/* Buttons Section */}
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => navigation.navigate('ChooseColor')}>
+            <Text style={styles.buttonText}>CHOOSE A COLOR</Text>
+          </TouchableOpacity>
 
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => navigation.navigate('SavedLocations')}>
-          <Text style={styles.buttonText}>SAVED LOCATIONS</Text>
-        </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => navigation.navigate('SavedLocations')}>
+            <Text style={styles.buttonText}>SAVED LOCATIONS</Text>
+          </TouchableOpacity>
 
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>INTERESTING FACTS</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('FavoritesLocations')}>
-          <Text style={styles.buttonText}>FAVORITES</Text>
-        </TouchableOpacity>
-      </View>
-    </ScrollView>
-      </SafeAreaView>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => navigation.navigate('InterestingFacts')}>
+            <Text style={styles.buttonText}>INTERESTING FACTS</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => navigation.navigate('FavoritesLocations')}>
+            <Text style={styles.buttonText}>FAVORITES</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
