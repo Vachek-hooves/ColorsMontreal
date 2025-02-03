@@ -7,14 +7,18 @@ import {
   ScrollView,
   Pressable,
   Image,
+  Alert,
 } from 'react-native';
 import { useMontrealContext } from '../../store/context';
 
 const SavedLocations = ({ navigation }) => {
-  const { favorites, toggleFavorite } = useMontrealContext();
+  const { customLocations, deleteCustomLocation } = useMontrealContext();
 
-  const handleDelete = async (location) => {
-    await toggleFavorite(location);
+  const handleDelete = async (locationId) => {
+    const success = await deleteCustomLocation(locationId);
+    if (!success) {
+      Alert.alert('Error', 'Failed to delete location');
+    }
   };
 
   return (
@@ -30,37 +34,14 @@ const SavedLocations = ({ navigation }) => {
         <Text style={styles.headerTitle}>Saved locations</Text>
       </View>
 
-      {/* Favorites List */}
       <ScrollView style={styles.scrollView}>
-        {favorites.map((location) => (
-          <Pressable
+        {customLocations.map((location) => (
+          <LocationCard
             key={location.id}
-            style={styles.locationCard}
-            onPress={() => navigation.navigate('LocationDetails', { 
-              color: location.color,
-              locationId: location.id 
-            })}
-          >
-            <Image
-              source={{ uri: location.image }}
-              style={styles.locationImage}
-            />
-            <View style={styles.locationInfo}>
-              <Text style={styles.locationTitle}>{location.name}</Text>
-              <Text 
-                numberOfLines={2} 
-                style={styles.locationDescription}
-              >
-                {location.description}
-              </Text>
-            </View>
-            <Pressable
-              style={styles.deleteButton}
-              onPress={() => handleDelete(location)}
-            >
-              <Text style={styles.deleteIcon}>×</Text>
-            </Pressable>
-          </Pressable>
+            location={location}
+            onDelete={() => handleDelete(location.id)}
+            onPress={() => navigation.navigate('CustomLocationDetails', { locationId: location.id })}
+          />
         ))}
       </ScrollView>
 
@@ -78,6 +59,27 @@ const SavedLocations = ({ navigation }) => {
     </SafeAreaView>
   );
 };
+
+// LocationCard component for reusability
+const LocationCard = ({ location, onPress, onDelete }) => (
+  <Pressable style={styles.locationCard} onPress={onPress}>
+    <Image
+      source={{ uri: location.image }}
+      style={styles.locationImage}
+    />
+    <View style={styles.locationInfo}>
+      <Text style={styles.locationTitle}>{location.name}</Text>
+      <Text numberOfLines={2} style={styles.locationDescription}>
+        {location.description}
+      </Text>
+    </View>
+    {onDelete && (
+      <Pressable style={styles.deleteButton} onPress={onDelete}>
+        <Text style={styles.deleteIcon}>×</Text>
+      </Pressable>
+    )}
+  </Pressable>
+);
 
 const styles = StyleSheet.create({
   container: {
@@ -158,6 +160,15 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     color: '#000000',
+  },
+  section: {
+    marginBottom: 24,
+  },
+  sectionTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#FFFFFF',
+    marginBottom: 16,
   },
 });
 

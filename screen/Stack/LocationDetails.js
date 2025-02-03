@@ -17,7 +17,7 @@ const LocationDetails = ({route, navigation}) => {
   const {color} = route.params;
   const location = getRandomLocationByColor(color);
   const {toggleFavorite, isFavorite} = useMontrealContext();
-  console.log(location.name);
+  // console.log(location.name);
   const colorName =
     color === '#4169E1'
       ? 'Royal Blue'

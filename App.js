@@ -10,6 +10,7 @@ import LocationDetails from './screen/Stack/LocationDetails';
 import MapLocation from './components/ui/MapLocation';
 import SavedLocations from './screen/Stack/SavedLocations';
 import CreateLocation from './screen/Stack/CreateLocation';
+import CustomLocationDetails from './screen/Stack/CustomLocationDetails';
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -26,6 +27,10 @@ export default function App() {
           <Stack.Screen name="MapLocation" component={MapLocation} />
           <Stack.Screen name="SavedLocations" component={SavedLocations} />
           <Stack.Screen name="CreateLocation" component={CreateLocation} />
+          <Stack.Screen
+            name="CustomLocationDetails"
+            component={CustomLocationDetails}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </MontrealProvider>

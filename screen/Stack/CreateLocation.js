@@ -9,12 +9,13 @@ import {
   TextInput,
   Modal,
   Image,
+  Alert,
 } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { useMontrealContext } from '../../store/context';
 
 const CreateLocation = ({ navigation }) => {
-  const { favorites } = useMontrealContext();
+  const { addCustomLocation } = useMontrealContext();
   const [isMapVisible, setIsMapVisible] = useState(false);
   const [newLocation, setNewLocation] = useState({
     id: Date.now(), // Generate unique ID
@@ -42,12 +43,18 @@ const CreateLocation = ({ navigation }) => {
     // Validate form
     if (!newLocation.name || !newLocation.description || !newLocation.image) {
       // Show error message
+      Alert.alert('Error', 'Please fill in all required fields');
       return;
     }
 
     // Save to context/AsyncStorage
-    // Navigate back
-    navigation.goBack();
+    const success = await addCustomLocation(newLocation);
+    
+    if (success) {
+      navigation.goBack();
+    } else {
+      Alert.alert('Error', 'Failed to save location');
+    }
   };
 
   return (
