@@ -15,7 +15,7 @@ import { useMontrealContext } from '../../store/context';
 
 const CustomLocationDetails = ({ route, navigation }) => {
   const { locationId } = route.params;
-  const { customLocations, deleteCustomLocation } = useMontrealContext();
+  const { customLocations, deleteCustomLocation, toggleFavorite, isFavorite } = useMontrealContext();
   const [isMapVisible, setIsMapVisible] = useState(false);
   
   const location = customLocations.find(loc => loc.id === locationId);
@@ -30,6 +30,13 @@ const CustomLocationDetails = ({ route, navigation }) => {
       navigation.goBack();
     } else {
       Alert.alert('Error', 'Failed to delete location');
+    }
+  };
+
+  const handleToggleFavorite = async () => {
+    const success = await toggleFavorite(location);
+    if (!success) {
+      Alert.alert('Error', 'Failed to update favorite status');
     }
   };
 
@@ -102,6 +109,22 @@ const CustomLocationDetails = ({ route, navigation }) => {
 
       {/* Action Buttons */}
       <View style={styles.actionContainer}>
+        <Pressable
+          style={[
+            styles.favoriteButton,
+            isFavorite(location.id) && styles.favoriteButtonActive
+          ]}
+          onPress={handleToggleFavorite}
+        >
+          <Image
+            source={require('../../assets/icons/bookmark.png')}
+            style={[
+              styles.favoriteIcon,
+              isFavorite(location.id) && styles.favoriteIconActive
+            ]}
+          />
+        </Pressable>
+
         <Pressable
           style={styles.deleteButton}
           onPress={handleDelete}
@@ -206,6 +229,28 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     padding: 20,
     gap: 12,
+    justifyContent: 'flex-end',
+  },
+  favoriteButton: {
+    width: 52,
+    height: 52,
+    borderRadius: 12,
+    borderWidth: 2,
+    borderColor: '#FFA500',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'transparent',
+  },
+  favoriteButtonActive: {
+    backgroundColor: '#FFA50033', // Semi-transparent orange
+  },
+  favoriteIcon: {
+    width: 24,
+    height: 24,
+    tintColor: '#FFA500',
+  },
+  favoriteIconActive: {
+    tintColor: '#FFA500', // Solid orange for active state
   },
   deleteButton: {
     width: 52,
