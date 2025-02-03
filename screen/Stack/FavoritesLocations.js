@@ -8,10 +8,23 @@ import {
   Pressable,
   Image,
 } from 'react-native';
-import { useMontrealContext } from '../../store/context';
+import {useMontrealContext} from '../../store/context';
+import Logo from '../../components/ui/Logo';
 
-const FavoritesLocations = ({ navigation }) => {
-  const { favorites } = useMontrealContext();
+const FavoritesLocations = ({navigation}) => {
+  const {favorites} = useMontrealContext();
+
+  const handleLocationPress = location => {
+    if (location.isCustom) {
+      navigation.navigate('CustomLocationDetails', {
+        locationId: location.id,
+      });
+    } else {
+      navigation.navigate('FavoritesDetails', {
+        locationId: location.id,
+      });
+    }
+  };
 
   if (favorites.length === 0) {
     return (
@@ -33,38 +46,30 @@ const FavoritesLocations = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>Favorites</Text>
+        {/* <Text style={styles.headerTitle}>Favorites</Text> */}
+        <Logo />
       </View>
 
       <ScrollView style={styles.scrollView}>
-        {favorites.map((location) => (
+        {favorites.map(location => (
           <Pressable
             key={location.id}
             style={styles.locationCard}
-            onPress={() => {
-              // Navigate based on location type
-              if (location.isCustom) {
-                navigation.navigate('CustomLocationDetails', { locationId: location.id });
-              } else {
-                navigation.navigate('LocationDetails', { 
-                  color: location.color,
-                  locationId: location.id 
-                });
-              }
-            }}
-          >
+            onPress={() => handleLocationPress(location)}>
             <Image
-              source={{ uri: location.image }}
+              source={{uri: location.image}}
               style={styles.locationImage}
             />
             <View style={styles.locationInfo}>
               <Text style={styles.locationTitle}>{location.name}</Text>
-              <Text 
-                numberOfLines={2} 
-                style={styles.locationDescription}
-              >
+              <Text numberOfLines={2} style={styles.locationDescription}>
                 {location.description}
               </Text>
+              {location.isCustom && (
+                <View style={styles.customBadge}>
+                  <Text style={styles.customBadgeText}>Custom</Text>
+                </View>
+              )}
             </View>
           </Pressable>
         ))}
@@ -117,6 +122,20 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#FFFFFF',
     opacity: 0.8,
+  },
+  customBadge: {
+    position: 'absolute',
+    top: 12,
+    right: 12,
+    backgroundColor: '#FFA50033',
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 4,
+  },
+  customBadgeText: {
+    color: '#FFA500',
+    fontSize: 12,
+    fontWeight: 'bold',
   },
   emptyContainer: {
     flex: 1,

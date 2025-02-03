@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import {getRandomLocationByColor} from '../../data/locations';
 import {useMontrealContext} from '../../store/context';
+import Logo from '../../components/ui/Logo';
 // import Icon from 'react-native-vector-icons/Ionicons'
 
 const LocationDetails = ({route, navigation}) => {
@@ -40,6 +41,7 @@ const LocationDetails = ({route, navigation}) => {
 
   return (
     <SafeAreaView style={styles.container}>
+      {/* <Logo /> */}
       <ScrollView>
         {/* Image Container */}
         <View
@@ -65,11 +67,13 @@ const LocationDetails = ({route, navigation}) => {
         <View style={styles.actionContainer}>
           <Pressable
             style={styles.mapButton}
-            onPress={() => navigation.navigate('MapLocation', {
+            onPress={() =>
+              navigation.navigate('MapLocation', {
                 latitude: location.coordinates.latitude,
                 longitude: location.coordinates.longitude,
                 name: location.name,
-              })}>
+              })
+            }>
             <Image
               source={require('../../assets/icons/map.png')}
               style={styles.mapIcon}

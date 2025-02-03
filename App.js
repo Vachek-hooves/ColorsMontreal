@@ -12,6 +12,7 @@ import SavedLocations from './screen/Stack/SavedLocations';
 import CreateLocation from './screen/Stack/CreateLocation';
 import CustomLocationDetails from './screen/Stack/CustomLocationDetails';
 import FavoritesLocations from './screen/Stack/FavoritesLocations';
+import FavoritesDetails from './screen/Stack/FavoritesDetails';
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -36,6 +37,7 @@ export default function App() {
             name="FavoritesLocations"
             component={FavoritesLocations}
           />
+          <Stack.Screen name="FavoritesDetails" component={FavoritesDetails} />
         </Stack.Navigator>
       </NavigationContainer>
     </MontrealProvider>

@@ -9,12 +9,13 @@ import {
   Image,
   Alert,
 } from 'react-native';
-import { useMontrealContext } from '../../store/context';
+import {useMontrealContext} from '../../store/context';
+import Logo from '../../components/ui/Logo';
 
-const SavedLocations = ({ navigation }) => {
-  const { customLocations, deleteCustomLocation } = useMontrealContext();
+const SavedLocations = ({navigation}) => {
+  const {customLocations, deleteCustomLocation} = useMontrealContext();
 
-  const handleDelete = async (locationId) => {
+  const handleDelete = async locationId => {
     const success = await deleteCustomLocation(locationId);
     if (!success) {
       Alert.alert('Error', 'Failed to delete location');
@@ -25,22 +26,27 @@ const SavedLocations = ({ navigation }) => {
     <SafeAreaView style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <Pressable onPress={() => navigation.goBack()}>
+        <Logo />
+        {/* <Pressable onPress={() => navigation.goBack()}>
           <Image
             source={require('../../assets/icons/back.png')}
             style={styles.backIcon}
           />
-        </Pressable>
+        </Pressable> */}
         <Text style={styles.headerTitle}>Saved locations</Text>
       </View>
 
       <ScrollView style={styles.scrollView}>
-        {customLocations.map((location) => (
+        {customLocations.map(location => (
           <LocationCard
             key={location.id}
             location={location}
             onDelete={() => handleDelete(location.id)}
-            onPress={() => navigation.navigate('CustomLocationDetails', { locationId: location.id })}
+            onPress={() =>
+              navigation.navigate('CustomLocationDetails', {
+                locationId: location.id,
+              })
+            }
           />
         ))}
       </ScrollView>
@@ -48,8 +54,7 @@ const SavedLocations = ({ navigation }) => {
       {/* Create New Location Button */}
       <Pressable
         style={styles.createButton}
-        onPress={() => navigation.navigate('CreateLocation')}
-      >
+        onPress={() => navigation.navigate('CreateLocation')}>
         <Image
           source={require('../../assets/icons/plus.png')}
           style={styles.plusIcon}
@@ -61,12 +66,9 @@ const SavedLocations = ({ navigation }) => {
 };
 
 // LocationCard component for reusability
-const LocationCard = ({ location, onPress, onDelete }) => (
+const LocationCard = ({location, onPress, onDelete}) => (
   <Pressable style={styles.locationCard} onPress={onPress}>
-    <Image
-      source={{ uri: location.image }}
-      style={styles.locationImage}
-    />
+    <Image source={{uri: location.image}} style={styles.locationImage} />
     <View style={styles.locationInfo}>
       <Text style={styles.locationTitle}>{location.name}</Text>
       <Text numberOfLines={2} style={styles.locationDescription}>
@@ -87,7 +89,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#180D0C',
   },
   header: {
-    flexDirection: 'row',
+    // flexDirection: 'row',
     alignItems: 'center',
     padding: 20,
     gap: 16,
