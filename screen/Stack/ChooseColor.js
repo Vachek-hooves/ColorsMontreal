@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView } from 'react-native'
+import { StyleSheet, Text, View, Pressable, SafeAreaView, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
 // import Icon from 'react-native-vector-icons/Ionicons'
 
@@ -44,9 +44,9 @@ const ChooseColor = ({ navigation }) => {
         {/* Color Wheel */}
         <View style={styles.colorWheel}>
           {colorSections.map((section) => (
-            <TouchableOpacity
+            <Pressable
               key={section.id}
-              style={[
+              style={({ pressed }) => [
                 styles.colorSection,
                 {
                   backgroundColor: section.color,
@@ -56,6 +56,9 @@ const ChooseColor = ({ navigation }) => {
                     { skewY: '30deg' }   // Add skew to create rhombus
                   ],
                   zIndex: section.zIndex,
+                  opacity: selectedColor && selectedColor !== section.color ? 0.5 : 1,
+                  borderColor: selectedColor === section.color ? '#FFFFFF' : '#333',
+                  borderWidth: selectedColor === section.color ? 2 : 1,
                 }
               ]}
               onPress={() => handleColorSelect(section.color)}
