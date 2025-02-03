@@ -66,16 +66,27 @@ const ChooseColor = ({ navigation }) => {
           ))}
         </View>
 
-        {/* Search Button */}
-        <TouchableOpacity 
+        {/* Updated Search Button */}
+        <Pressable 
           style={[
             styles.button,
-            { opacity: selectedColor ? 1 : 0.9 }
+            !selectedColor && styles.buttonInactive
           ]}
           disabled={!selectedColor}
+          onPress={() => {
+            if (selectedColor) {
+              // Navigate or handle search
+              console.log('Starting search with color:', selectedColor)
+            }
+          }}
         >
-          <Text style={styles.buttonText}>START SEARCH</Text>
-        </TouchableOpacity>
+          <Text style={[
+            styles.buttonText,
+            !selectedColor && styles.buttonTextInactive
+          ]}>
+            START SEARCH
+          </Text>
+        </Pressable>
       </View>
     </SafeAreaView>
   )
@@ -178,9 +189,18 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     marginTop: 40,
   },
+  buttonInactive: {
+    backgroundColor: '#FFA50050', // Semi-transparent orange
+    // Or you could use: backgroundColor: '#666' for a grey button
+  },
   buttonText: {
     color: '#000',
     fontSize: 16,
     fontWeight: 'bold',
+    textAlign: 'center',
   },
+  buttonTextInactive: {
+    color: '#00000050', // Semi-transparent black
+    // Or you could use: color: '#999' for grey text
+  }
 })
