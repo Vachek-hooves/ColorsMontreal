@@ -22,11 +22,6 @@ const InterestingFacts = ({navigation}) => {
 
       {/* Animated Circles */}
       <View style={styles.circlesContainer}>
-        {/* <View style={[styles.circle, styles.mainCircle]}>
-          <View style={[styles.circle, styles.orangeCircle]} />
-          <View style={[styles.circle, styles.redCircle]} />
-          <View style={[styles.circle, styles.yellowCircle]} />
-        </View> */}
         <OrbitCircles />
       </View>
 
@@ -71,39 +66,9 @@ const styles = StyleSheet.create({
     // flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginVertical:'10%'
+    marginVertical: '10%',
   },
-  circle: {
-    position: 'absolute',
-    borderRadius: 999,
-  },
-  mainCircle: {
-    width: 240,
-    height: 240,
-    backgroundColor: '#2A1F1E',
-    position: 'relative',
-  },
-  orangeCircle: {
-    width: 60,
-    height: 60,
-    backgroundColor: '#FFA500',
-    top: -30,
-    left: 90,
-  },
-  redCircle: {
-    width: 80,
-    height: 80,
-    backgroundColor: '#FF4500',
-    top: 80,
-    left: 80,
-  },
-  yellowCircle: {
-    width: 50,
-    height: 50,
-    backgroundColor: '#FFD700',
-    bottom: 0,
-    right: 40,
-  },
+
   content: {
     alignItems: 'center',
     marginBottom: 40,
@@ -132,7 +97,7 @@ const styles = StyleSheet.create({
     color: '#000000',
     fontSize: 22,
     fontWeight: 'bold',
-    paddingVertical:16
+    paddingVertical: 16,
   },
 });
 
