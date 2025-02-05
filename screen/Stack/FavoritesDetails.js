@@ -86,7 +86,11 @@ const FavoritesDetails = ({ route, navigation }) => {
       <View style={styles.actionContainer}>
         <Pressable 
           style={styles.mapButton}
-          onPress={() => {}}
+          onPress={() => navigation.navigate('MapLocation', {
+            latitude: location.coordinates.latitude,
+            longitude: location.coordinates.longitude,
+            name: location.name,
+          })}
         >
           <Image
             source={require('../../assets/icons/map.png')}
