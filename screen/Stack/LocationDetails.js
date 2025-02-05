@@ -119,7 +119,7 @@ const LocationDetails = ({route, navigation}) => {
         <View style={styles.bottomContainer}>
           <Pressable
             style={styles.searchAgainButton}
-            // onPress={() => navigation.goBack()}
+            onPress={() => navigation.goBack()}
           >
             <Text style={styles.buttonText}>SEARCH AGAIN</Text>
           </Pressable>

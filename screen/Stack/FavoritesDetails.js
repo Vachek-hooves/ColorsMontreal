@@ -72,7 +72,7 @@ const FavoritesDetails = ({ route, navigation }) => {
                   latitudeDelta: 0.01,
                   longitudeDelta: 0.01,
                 }}
-                scrollEnabled={false}
+                scrollEnabled={true}
                 zoomEnabled={false}
               >
                 <Marker coordinate={location.coordinates} />

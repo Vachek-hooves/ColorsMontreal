@@ -6,8 +6,8 @@ const Logo = () => {
 
   return (
     <View style={styles.header}>
-      {/* <TouchableOpacity onPress={() => navigation.goBack()}> */}
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.goBack()}>
+      {/* <TouchableOpacity> */}
         <Image
           source={require('../../assets/icons/back.png')}
           style={styles.backIcon}
